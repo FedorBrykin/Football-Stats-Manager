@@ -16,17 +16,16 @@ public class Player {
     @Column(nullable = false)
     private String lastName;
 
-    @Enumerated(EnumType.STRING) // Сохраняет значение enum как строку в БД (например, "FORWARD")
+    @Enumerated(EnumType.STRING) // Сохраняет значение enum как строку в БД
     private Position position;
 
     private Integer number; // Игровой номер
 
-    // Связь Many-to-One: много игроков могут играть в одной команде
-    @ManyToOne(fetch = FetchType.LAZY) // Стратегия загрузки: данные команды подгрузятся только когда явно попросим
-    @JoinColumn(name = "team_id") // Имя колонки в таблице players для внешнего ключа
+    // Many-to-One: много игроков могут играть в одной команде
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "team_id")
     private Team team;
 
-    // Конструкторы
     public Player() {}
 
     public Player(String firstName, String lastName, Position position, Integer number, Team team) {
@@ -59,7 +58,7 @@ public class Player {
                 ", lastName='" + lastName + '\'' +
                 ", position=" + position +
                 ", number=" + number +
-                ", team=" + (team != null ? team.getName() : "null") + // Чтобы избежать бесконечной рекурсии
+                ", team=" + (team != null ? team.getName() : "null") +
                 '}';
     }
 }
