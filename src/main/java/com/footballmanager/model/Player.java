@@ -21,7 +21,7 @@ public class Player {
 
     private Integer number; // Игровой номер
 
-    // Many-to-One: много игроков могут играть в одной команде
+    // Many-to-One: много игроков в одной команде
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "team_id")
     private Team team;
