@@ -2,6 +2,7 @@ package com.footballmanager.service;
 
 import com.footballmanager.dto.PlayerDto;
 import com.footballmanager.dto.PlayerRequestDto;
+import com.footballmanager.exception.ResourceNotFoundException;
 import com.footballmanager.model.Player;
 import com.footballmanager.model.Team;
 import com.footballmanager.repository.PlayerRepository;
@@ -59,7 +60,7 @@ public class PlayerService {
 
     public PlayerDto createPlayer(PlayerRequestDto playerRequestDto) {
         Team team = teamRepository.findById(playerRequestDto.getTeamId())
-                .orElseThrow(() -> new RuntimeException("Team not found with id: " + playerRequestDto.getTeamId()));
+                .orElseThrow(() -> new ResourceNotFoundException("Team not found with id: " + playerRequestDto.getTeamId()));
         Player player = new Player();
         player.setFirstName(playerRequestDto.getFirstName());
         player.setLastName(playerRequestDto.getLastName());
@@ -72,7 +73,7 @@ public class PlayerService {
 
     public void deletePlayer(Long id) {
         Player player = playerRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Player not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Player not found with id: " + id));
         playerRepository.delete(player);
     }
 }

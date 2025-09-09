@@ -1,5 +1,6 @@
 package com.footballmanager.service;
 
+import com.footballmanager.exception.ResourceNotFoundException;
 import com.footballmanager.model.Team;
 import com.footballmanager.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,17 +33,16 @@ public class TeamService {
 
     public Team updateTeam(Long id, Team teamDetails) {
         Team team = teamRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Team not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Team not found with id: " + id));
         team.setName(teamDetails.getName());
         team.setCity(teamDetails.getCity());
         team.setFoundedYear(teamDetails.getFoundedYear());
-
         return teamRepository.save(team);
     }
 
     public void deleteTeam(Long id) {
         Team team = teamRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Team not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Team not found with id: " + id));
         teamRepository.delete(team);
     }
 }

@@ -1,6 +1,9 @@
 package com.footballmanager.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "teams")
@@ -10,10 +13,12 @@ public class Team {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @NotBlank(message = "There should be a team name")
     private String name;
 
     private String city;
+    @NotNull(message = "The year of foundation is not specified")
+    @Min(value = 1857, message = "The year of foundation should be more realistic")
     private Integer foundedYear;
 
     public Team() {} // пустой конструктор для JPA
